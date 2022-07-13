@@ -7,7 +7,14 @@ import { Pressable, StyleSheet } from "react-native";
 export default function FrontScreen() {
   const [value, setValue] = useState(true);
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        padding: 20,
+        flex: 1,
+        justifyContent: "center",
+        
+      }}
+    >
       {value ? <SignIn /> : <SignUp />}
       <View>
         <Pressable
@@ -15,7 +22,7 @@ export default function FrontScreen() {
           style={{
             backgroundColor: "#e33062",
             height: 50,
-            borderRadius: 5,
+            borderRadius: 50,
             alignItems: "center",
             justifyContent: "center",
             marginTop: 30,

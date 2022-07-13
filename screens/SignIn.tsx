@@ -37,8 +37,8 @@ export default function SignIn() {
       });
   }
   return (
-    <View style={{ padding: 20 }}>
-      <Text style={{color: Colors[colorScheme].text}}>E-mail</Text>
+    <View>
+      <Text style={{ color: Colors[colorScheme].text }}>E-mail</Text>
       <TextInput
         onChangeText={setText}
         placeholder="email"
@@ -50,7 +50,7 @@ export default function SignIn() {
           marginVertical: 25,
         }}
       />
-      <Text style={{color: Colors[colorScheme].text}}>Password</Text>
+      <Text style={{ color: Colors[colorScheme].text }}>Password</Text>
       <TextInput
         onChangeText={setPassword}
         placeholder="password"
@@ -64,8 +64,26 @@ export default function SignIn() {
       />
 
       <View>
-        <Pressable onPress={auth}>
-          <Text>Login</Text>
+        <Pressable
+          onPress={auth}
+          style={{
+            backgroundColor: "#e33062",
+            height: 50,
+            borderRadius: 50,
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 30,
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 18,
+              fontWeight: "bold",
+            }}
+          >
+            Login
+          </Text>
         </Pressable>
       </View>
       <View>

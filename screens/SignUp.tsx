@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { StyleSheet, TextInput, Pressable } from "react-native";
-import { Text, View } from "../components/Themed";
+import { Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 
@@ -38,7 +38,7 @@ export default function SignUp() {
       });
   }
   return (
-    <View style={{ padding: 20 }}>
+    <View >
       <Text style={{ color: Colors[colorScheme].text }}>Name :</Text>
       <TextInput
         style={{
@@ -76,8 +76,26 @@ export default function SignUp() {
         value={password}
       />
       <View>
-        <Pressable onPress={auth}>
-          <Text>Ok</Text>
+        <Pressable
+          onPress={auth}
+          style={{
+            backgroundColor: "#e33062",
+            height: 50,
+            borderRadius: 50,
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 30,
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 18,
+              fontWeight: "bold",
+            }}
+          >
+            Go!
+          </Text>
         </Pressable>
       </View>
       <View>
