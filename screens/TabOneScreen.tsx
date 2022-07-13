@@ -11,11 +11,14 @@ export default function TabOneScreen({
 }: RootTabScreenProps<"TabOne">) {
   var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVsbGVuQGdtYWlsLmNvbSIsInN1YiI6IjYyYzZjOWZkNTIyYmM2N2Q4NGMxZTJjNSIsImlhdCI6MTY1NzY5Njc1NCwiZXhwIjoxNjU3Njk3NjU0fQ.tjcrz9Hg6ckJNhcZxwNmxy_L_uY4bcPl_GoPX058G_k"
   const config = {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${token}` },
+    body:{
+      name:"Akash"
+    }
 };
   async function fetch() {
-    const response = await axios.get('https://first-nest.vercel.app/find',config);
-    console.log(response);
+    const response = await axios.get('https://first-nest.vercel.app/users/me',config);
+    console.log(response.data);
   }
   return (
     <View style={styles.container}>
