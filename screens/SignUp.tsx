@@ -44,14 +44,16 @@ export default function SignUp() {
           color: Colors[colorScheme].text,
           fontWeight: "bold",
           fontSize: 25,
-          
         }}
       >
         Name :
       </Text>
       <TextInput
         style={{
-          borderColor:"red",
+          padding: 18,
+          borderWidth:2,
+          borderRadius:20,
+          borderColor: "#e33062",
           color: Colors[colorScheme].text,
           fontSize: 18,
           width: "100%",
@@ -72,6 +74,10 @@ export default function SignUp() {
       </Text>
       <TextInput
         style={{
+          padding: 18,
+          borderWidth:2,
+          borderRadius:20,
+          borderColor: "#e33062",
           color: Colors[colorScheme].text,
           fontSize: 18,
           width: "100%",
@@ -92,11 +98,16 @@ export default function SignUp() {
       </Text>
       <TextInput
         style={{
+          padding: 18,
+          borderWidth:2,
+          borderRadius:20,
+          borderColor: "#e33062",
           color: Colors[colorScheme].text,
           fontSize: 18,
           width: "100%",
           marginVertical: 25,
         }}
+        secureTextEntry
         onChangeText={setPassword}
         placeholder="password"
         value={password}

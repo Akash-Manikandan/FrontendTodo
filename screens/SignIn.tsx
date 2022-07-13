@@ -52,6 +52,10 @@ export default function SignIn() {
         placeholder="email"
         value={text}
         style={{
+          padding: 18,
+          borderWidth: 2,
+          borderRadius: 20,
+          borderColor: "#e33062",
           color: Colors[colorScheme].text,
           fontSize: 18,
           width: "100%",
@@ -71,7 +75,12 @@ export default function SignIn() {
         onChangeText={setPassword}
         placeholder="password"
         value={password}
+        secureTextEntry
         style={{
+          padding: 18,
+          borderWidth: 2,
+          borderRadius: 20,
+          borderColor: "#e33062",
           color: Colors[colorScheme].text,
           fontSize: 18,
           width: "100%",
