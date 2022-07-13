@@ -38,7 +38,15 @@ export default function SignIn() {
   }
   return (
     <View>
-      <Text style={{ color: Colors[colorScheme].text }}>E-mail</Text>
+      <Text
+        style={{
+          color: Colors[colorScheme].text,
+          fontWeight: "bold",
+          fontSize: 25,
+        }}
+      >
+        E-mail
+      </Text>
       <TextInput
         onChangeText={setText}
         placeholder="email"
@@ -50,7 +58,15 @@ export default function SignIn() {
           marginVertical: 25,
         }}
       />
-      <Text style={{ color: Colors[colorScheme].text }}>Password</Text>
+      <Text
+        style={{
+          color: Colors[colorScheme].text,
+          fontWeight: "bold",
+          fontSize: 25,
+        }}
+      >
+        Password
+      </Text>
       <TextInput
         onChangeText={setPassword}
         placeholder="password"

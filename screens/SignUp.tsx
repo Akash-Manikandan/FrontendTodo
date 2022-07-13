@@ -44,12 +44,14 @@ export default function SignUp() {
           color: Colors[colorScheme].text,
           fontWeight: "bold",
           fontSize: 25,
+          
         }}
       >
         Name :
       </Text>
       <TextInput
         style={{
+          borderColor:"red",
           color: Colors[colorScheme].text,
           fontSize: 18,
           width: "100%",
