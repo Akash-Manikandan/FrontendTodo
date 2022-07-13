@@ -1,4 +1,4 @@
-import { View, Text } from "../components/Themed";
+import { View, Text } from "react-native";
 import React, { useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -7,22 +7,40 @@ import { Pressable, StyleSheet } from "react-native";
 export default function FrontScreen() {
   const [value, setValue] = useState(true);
   return (
-    <View>
+    <View style={styles.container}>
       {value ? <SignIn /> : <SignUp />}
-      <View style={styles.container}>
+      <View>
         <Pressable
           onPress={() => setValue(!value)}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? "rgb(210, 230, 255)" : "white",
-            },
-            styles.wrapperCustom,
-          ]}
+          style={{
+            backgroundColor: "#e33062",
+            height: 50,
+            borderRadius: 5,
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 30,
+          }}
         >
           {value ? (
-            <Text style={styles.buttons}>SignUp</Text>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              SignUp
+            </Text>
           ) : (
-            <Text style={styles.buttons}>SignIn</Text>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              SignIn
+            </Text>
           )}
         </Pressable>
       </View>
@@ -40,11 +58,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   wrapperCustom: {
-    borderRadius: 25,
+    /*borderRadius: 25,
     justifyContent: "center",
-    textAlign: "center",
+    textAlign: "center",*/
   },
   container: {
     flex: 1,
+    alignContent: "center",
   },
 });

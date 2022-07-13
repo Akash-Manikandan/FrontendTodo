@@ -2,12 +2,16 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { StyleSheet, TextInput, Pressable } from "react-native";
-import { View, Text } from "../components/Themed";
+import { View, Text } from "react-native";
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
 
 export default function SignIn() {
   const [text, setText] = useState("ellen@gmail.com");
   const [password, setPassword] = useState("ellen");
   const [value, setValue] = useState({});
+
+  const colorScheme = useColorScheme();
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
@@ -33,28 +37,38 @@ export default function SignIn() {
       });
   }
   return (
-    <View style={styles.container}>
-      <Text>E-mail</Text>
+    <View style={{ padding: 20 }}>
+      <Text style={{color: Colors[colorScheme].text}}>E-mail</Text>
       <TextInput
-        style={styles.textBox}
         onChangeText={setText}
         placeholder="email"
         value={text}
+        style={{
+          color: Colors[colorScheme].text,
+          fontSize: 18,
+          width: "100%",
+          marginVertical: 25,
+        }}
       />
-      <Text>Password</Text>
+      <Text style={{color: Colors[colorScheme].text}}>Password</Text>
       <TextInput
-        style={styles.textBox}
         onChangeText={setPassword}
         placeholder="password"
         value={password}
+        style={{
+          color: Colors[colorScheme].text,
+          fontSize: 18,
+          width: "100%",
+          marginVertical: 25,
+        }}
       />
 
-      <View style={{ padding: 20 }}>
+      <View>
         <Pressable onPress={auth}>
           <Text>Login</Text>
         </Pressable>
       </View>
-      <View style={{ padding: 20 }}>
+      <View>
         <Text>{JSON.stringify(value)}</Text>
       </View>
     </View>
@@ -63,10 +77,9 @@ export default function SignIn() {
 
 const styles = StyleSheet.create({
   container: {
-    
-    padding: 40,
+    //padding: 40,
   },
   textBox: {
-    padding: 20,
+    // padding: 20,
   },
 });

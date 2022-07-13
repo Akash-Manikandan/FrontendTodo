@@ -3,12 +3,15 @@ import React from "react";
 import { useState } from "react";
 import { StyleSheet, TextInput, Pressable } from "react-native";
 import { Text, View } from "../components/Themed";
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [text, setText] = useState("");
   const [password, setPassword] = useState("");
   const [value, setValue] = useState({});
+  const colorScheme = useColorScheme();
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
@@ -35,34 +38,49 @@ export default function SignUp() {
       });
   }
   return (
-    <View style={styles.container}>
-      <Text>Name :</Text>
+    <View style={{ padding: 20 }}>
+      <Text style={{ color: Colors[colorScheme].text }}>Name :</Text>
       <TextInput
-        style={styles.textBox}
+        style={{
+          color: Colors[colorScheme].text,
+          fontSize: 18,
+          width: "100%",
+          marginVertical: 25,
+        }}
         onChangeText={setName}
         placeholder="name"
         value={name}
       />
-      <Text>E-mail :</Text>
+      <Text style={{ color: Colors[colorScheme].text }}>E-mail :</Text>
       <TextInput
-        style={styles.textBox}
+        style={{
+          color: Colors[colorScheme].text,
+          fontSize: 18,
+          width: "100%",
+          marginVertical: 25,
+        }}
         onChangeText={setText}
         placeholder="email"
         value={text}
       />
-      <Text>Password :</Text>
+      <Text style={{ color: Colors[colorScheme].text }}>Password :</Text>
       <TextInput
-        style={styles.textBox}
+        style={{
+          color: Colors[colorScheme].text,
+          fontSize: 18,
+          width: "100%",
+          marginVertical: 25,
+        }}
         onChangeText={setPassword}
         placeholder="password"
         value={password}
       />
-      <View style={{ padding: 20 }}>
+      <View>
         <Pressable onPress={auth}>
           <Text>Ok</Text>
         </Pressable>
       </View>
-      <View style={{ padding: 20 }}>
+      <View>
         <Text>{JSON.stringify(value)}</Text>
       </View>
     </View>
@@ -71,9 +89,9 @@ export default function SignUp() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 40,
+    // padding: 40,
   },
   textBox: {
-    padding: 20,
+    // padding: 20,
   },
 });
