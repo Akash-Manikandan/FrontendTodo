@@ -38,8 +38,16 @@ export default function SignUp() {
       });
   }
   return (
-    <View >
-      <Text style={{ color: Colors[colorScheme].text }}>Name :</Text>
+    <View>
+      <Text
+        style={{
+          color: Colors[colorScheme].text,
+          fontWeight: "bold",
+          fontSize: 25,
+        }}
+      >
+        Name :
+      </Text>
       <TextInput
         style={{
           color: Colors[colorScheme].text,
@@ -51,7 +59,15 @@ export default function SignUp() {
         placeholder="name"
         value={name}
       />
-      <Text style={{ color: Colors[colorScheme].text }}>E-mail :</Text>
+      <Text
+        style={{
+          color: Colors[colorScheme].text,
+          fontWeight: "bold",
+          fontSize: 25,
+        }}
+      >
+        E-mail :
+      </Text>
       <TextInput
         style={{
           color: Colors[colorScheme].text,
@@ -63,7 +79,15 @@ export default function SignUp() {
         placeholder="email"
         value={text}
       />
-      <Text style={{ color: Colors[colorScheme].text }}>Password :</Text>
+      <Text
+        style={{
+          color: Colors[colorScheme].text,
+          fontWeight: "bold",
+          fontSize: 25,
+        }}
+      >
+        Password :
+      </Text>
       <TextInput
         style={{
           color: Colors[colorScheme].text,
