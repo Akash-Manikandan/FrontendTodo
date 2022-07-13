@@ -32,7 +32,8 @@ export default function SignIn() {
       .then(function (response) {
         console.log(response.data);
         setValue(response.data);
-        navigation.navigate("Todo");
+
+        navigation.replace("Todo");
       })
       .catch(function (error) {
         console.log(error);
