@@ -20,6 +20,7 @@ import FrontScreen from "../screens/FrontScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SignIn from "../screens/SignIn";
+import SignUp from "../screens/SignUp";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
@@ -58,12 +59,18 @@ function RootNavigator() {
         component={FrontScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Todo"
+        component={BottomTabNavigator}
+        options={{ title: "SignIn" }}
+      />
 
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{ title: "Oops!" }}
+        options={{ title: "SignIn!" }}
       />
+
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -83,6 +90,7 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
+      
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}

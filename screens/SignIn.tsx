@@ -1,16 +1,17 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { StyleSheet, TextInput, Pressable } from "react-native";
+import { TextInput, Pressable } from "react-native";
 import { View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SignIn() {
   const [text, setText] = useState("ellen@gmail.com");
   const [password, setPassword] = useState("ellen");
   const [value, setValue] = useState({});
-
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
@@ -31,6 +32,7 @@ export default function SignIn() {
       .then(function (response) {
         console.log(response.data);
         setValue(response.data);
+        navigation.navigate("Todo");
       })
       .catch(function (error) {
         console.log(error);
@@ -117,12 +119,3 @@ export default function SignIn() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    //padding: 40,
-  },
-  textBox: {
-    // padding: 20,
-  },
-});
