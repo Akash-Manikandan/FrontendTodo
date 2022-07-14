@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios, { Axios } from "axios";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 
 import EditScreenInfo from "../components/EditScreenInfo";
@@ -10,22 +10,35 @@ import { RootTabScreenProps } from "../types";
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
-  /*var token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVsbGVuQGdtYWlsLmNvbSIsInN1YiI6IjYyYzZjOWZkNTIyYmM2N2Q4NGMxZTJjNSIsImlhdCI6MTY1Nzc3NjU2OSwiZXhwIjoxNjU3Nzc3NDY5fQ.2GyM7cspC-QTnFPPiv3YXLUG-PmThKW88IXMjRXj7MA";
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }, 
-  };*/
+  const [details, setDetails] = useState("");
+  const [token, setToken] = useState("");
   async function fetch() {
-    /*const response = await axios.get(
-      "https://first-nest.vercel.app/users/me",
-      config
-    );
-    console.log(response.data);*/
-    const jsonValue = await AsyncStorage.getItem("@kayee_login");
-    jsonValue != null ? console.log(JSON.parse(jsonValue)) : console.log("1");
-    const jsonValue1 = await AsyncStorage.getItem("@kayee_details");
-    jsonValue1 != null ? console.log(JSON.parse(jsonValue1)) : console.log("2");
+    console.log((details.id));
+    console.log(token.replaceAll('"',""));
+    await axios
+      .get(`https://first-nest.vercel.app/${details.id}`, {
+        headers: { Authorization : `Bearer ${token.replaceAll('"',"")}` },
+      })
+      .then(function (res) {
+        console.log(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
+  useEffect(() => {
+    const fetchData = async () => {
+      const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
+      const jsonValue1: any = await AsyncStorage.getItem("@kayee_details");
+      setDetails(JSON.parse(jsonValue1));
+      setToken(jsonValue);
+    };
+    fetchData();
+    return () => {
+      null;
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <Pressable onPress={fetch}>
