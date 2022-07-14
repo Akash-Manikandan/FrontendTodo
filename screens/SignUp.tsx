@@ -5,7 +5,7 @@ import { StyleSheet, TextInput, Pressable } from "react-native";
 import { Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-
+import { ActivityIndicator } from "react-native";
 export default function SignUp() {
   const [name, setName] = useState("");
   const [text, setText] = useState("");
@@ -114,6 +114,7 @@ export default function SignUp() {
       />
       <View>
         <Pressable
+        
           onPress={auth}
           style={{
             backgroundColor: "#e33062",

@@ -8,10 +8,15 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ContentLoader, {
+  FacebookLoader,
+  InstagramLoader,
+  Bullets,
+} from "react-native-easy-content-loader";
 
 export default function SignIn() {
-  const [text, setText] = useState("ellen@gmail.com");
-  const [password, setPassword] = useState("ellen");
+  const [text, setText] = useState("ke@gmail.com");
+  const [password, setPassword] = useState("karthi");
 
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
@@ -121,7 +126,7 @@ export default function SignIn() {
             marginTop: 30,
           }}
         >
-          <Text
+          {/*<Text
             style={{
               color: "white",
               fontSize: 18,
@@ -129,7 +134,8 @@ export default function SignIn() {
             }}
           >
             Login
-          </Text>
+          </Text>*/}
+          <FacebookLoader active pRows={0} pWidth={[50,70,50]} pHeight={[10,70,100]} />
         </Pressable>
       </View>
     </View>
