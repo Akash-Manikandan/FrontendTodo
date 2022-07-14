@@ -7,17 +7,17 @@ import { View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignIn() {
   const [text, setText] = useState("ellen@gmail.com");
   const [password, setPassword] = useState("ellen");
-  const [value, setValue] = useState({});
+
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
-    
   };
   async function auth() {
     await axios
@@ -31,14 +31,30 @@ export default function SignIn() {
           headers,
         }
       )
-      .then(function (response) {
-        console.log(response.data);
-        setValue(response.data);
-
-        navigation.replace("Todo");
+      .then(async function (response) {
+        await AsyncStorage.setItem(
+          "@kayee_login",
+          JSON.stringify(response.data.access_token)
+        );
+        await axios
+          .get("https://first-nest.vercel.app/users/me", {
+            headers: { Authorization: `Bearer ${response.data.access_token}` },
+          })
+          .then(async function (res) {
+            await AsyncStorage.setItem(
+              "@kayee_details",
+              JSON.stringify(res.data)
+            );
+            if (res.data && response.data) {
+              navigation.replace("Todo");
+            }
+          })
+          .catch(function (error) {
+            console.log(error + "1333");
+          });
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error + "1");
       });
   }
   return (
@@ -115,9 +131,6 @@ export default function SignIn() {
             Login
           </Text>
         </Pressable>
-      </View>
-      <View>
-        <Text>{JSON.stringify(value)}</Text>
       </View>
     </View>
   );
