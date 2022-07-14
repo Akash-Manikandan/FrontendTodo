@@ -51,8 +51,8 @@ export default function SignUp() {
       <TextInput
         style={{
           padding: 18,
-          borderWidth:2,
-          borderRadius:20,
+          borderWidth: 2,
+          borderRadius: 20,
           borderColor: "#e33062",
           color: Colors[colorScheme].text,
           fontSize: 18,
@@ -75,8 +75,8 @@ export default function SignUp() {
       <TextInput
         style={{
           padding: 18,
-          borderWidth:2,
-          borderRadius:20,
+          borderWidth: 2,
+          borderRadius: 20,
           borderColor: "#e33062",
           color: Colors[colorScheme].text,
           fontSize: 18,
@@ -99,8 +99,8 @@ export default function SignUp() {
       <TextInput
         style={{
           padding: 18,
-          borderWidth:2,
-          borderRadius:20,
+          borderWidth: 2,
+          borderRadius: 20,
           borderColor: "#e33062",
           color: Colors[colorScheme].text,
           fontSize: 18,
@@ -134,9 +134,6 @@ export default function SignUp() {
             Go!
           </Text>
         </Pressable>
-      </View>
-      <View>
-        <Text>{JSON.stringify(value)}</Text>
       </View>
     </View>
   );
