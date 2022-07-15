@@ -2,7 +2,12 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { TextInput, Pressable } from "react-native";
+import {
+  TextInput,
+  Pressable,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -15,8 +20,12 @@ import ContentLoader, {
 } from "react-native-easy-content-loader";
 
 export default function SignIn() {
+  const toggleLoading = () => {
+    setIsLoading(!isLoading);
+  };
   const [text, setText] = useState("ke@gmail.com");
   const [password, setPassword] = useState("karthi");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
@@ -24,7 +33,9 @@ export default function SignIn() {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
   };
+
   async function auth() {
+    toggleLoading();
     await axios
       .post(
         "https://first-nest.vercel.app/auth/signin",
@@ -62,6 +73,7 @@ export default function SignIn() {
         console.log(error + "1");
       });
   }
+
   return (
     <View>
       <Text
@@ -115,6 +127,7 @@ export default function SignIn() {
       />
 
       <View>
+      {isLoading && <ActivityIndicator size="large" color="#e33062" />}
         <Pressable
           onPress={auth}
           style={{
@@ -126,7 +139,8 @@ export default function SignIn() {
             marginTop: 30,
           }}
         >
-          {/*<Text
+          
+          <Text
             style={{
               color: "white",
               fontSize: 18,
@@ -134,8 +148,7 @@ export default function SignIn() {
             }}
           >
             Login
-          </Text>*/}
-          <FacebookLoader active pRows={0} pWidth={[50,70,50]} pHeight={[10,70,100]} />
+          </Text>
         </Pressable>
       </View>
     </View>

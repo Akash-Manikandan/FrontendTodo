@@ -1,22 +1,33 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import { StyleSheet, TextInput, Pressable } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import { Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import { ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 export default function SignUp() {
   const [name, setName] = useState("");
   const [text, setText] = useState("");
   const [password, setPassword] = useState("");
-  const [value, setValue] = useState({});
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
+  const [isLoading, setIsLoading] = useState(false);
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
   };
+  const toggleLoading = () => {
+    setIsLoading(!isLoading);
+  };
   async function auth() {
+    toggleLoading();
     await axios
       .post(
         "https://first-nest.vercel.app/auth/signup",
@@ -29,12 +40,30 @@ export default function SignUp() {
           headers,
         }
       )
-      .then(function (response) {
-        console.log(response.data);
-        setValue(response.data);
+      .then(async function (response) {
+        await AsyncStorage.setItem(
+          "@kayee_login",
+          JSON.stringify(response.data.access_token)
+        );
+        await axios
+          .get("https://first-nest.vercel.app/users/me", {
+            headers: { Authorization: `Bearer ${response.data.access_token}` },
+          })
+          .then(async function (res) {
+            await AsyncStorage.setItem(
+              "@kayee_details",
+              JSON.stringify(res.data)
+            );
+            if (res.data && response.data) {
+              navigation.replace("Todo");
+            }
+          })
+          .catch(function (error) {
+            console.log(error + "1333");
+          });
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error + "1");
       });
   }
   return (
@@ -113,8 +142,9 @@ export default function SignUp() {
         value={password}
       />
       <View>
+        {isLoading && <ActivityIndicator size="large" color="#e33062" />}
+
         <Pressable
-        
           onPress={auth}
           style={{
             backgroundColor: "#e33062",
