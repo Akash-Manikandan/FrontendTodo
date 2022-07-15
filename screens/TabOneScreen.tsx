@@ -12,28 +12,32 @@ export default function TabOneScreen({
 }: RootTabScreenProps<"TabOne">) {
   const [details, setDetails] = useState("");
   const [token, setToken] = useState("");
-  async function fetch() {
-    console.log(details.id);
-    console.log(token.replaceAll('"', ""));
-    await axios
-      .get(`https://first-nest.vercel.app/${details.id}`, {
-        headers: { Authorization: `Bearer ${token.replaceAll('"', "")}` },
-      })
-      .then(function (res) {
-        console.log(res.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+
+  
 
   useEffect(() => {
+    async function fetchTodo(a: any, b: any) {
+      console.log(b.id);
+      console.log(a.replaceAll('"', ""));
+      await axios
+        .get(`https://first-nest.vercel.app/${b.id}`, {
+          headers: { Authorization: `Bearer ${a.replaceAll('"', "")}` },
+        })
+        .then(function (res) {
+          console.log(res.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
     const fetchData = async () => {
       const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
       const jsonValue1: any = await AsyncStorage.getItem("@kayee_details");
       setDetails(JSON.parse(jsonValue1));
       setToken(jsonValue);
+      fetchTodo(jsonValue, jsonValue1);
     };
+
     fetchData();
     return () => {
       null;
@@ -42,10 +46,9 @@ export default function TabOneScreen({
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={fetch}>
+      <Pressable onPress={fetchTodo}>
         <Text style={styles.title}>Click here</Text>
       </Pressable>
-
     </View>
   );
 }
