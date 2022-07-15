@@ -13,11 +13,7 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ContentLoader, {
-  FacebookLoader,
-  InstagramLoader,
-  Bullets,
-} from "react-native-easy-content-loader";
+
 
 export default function SignIn() {
   const toggleLoading = () => {

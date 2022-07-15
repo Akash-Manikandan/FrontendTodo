@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { FlatList, Pressable, StyleSheet } from "react-native";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
@@ -13,11 +13,11 @@ export default function TabOneScreen({
   const [details, setDetails] = useState("");
   const [token, setToken] = useState("");
   async function fetch() {
-    console.log((details.id));
-    console.log(token.replaceAll('"',""));
+    console.log(details.id);
+    console.log(token.replaceAll('"', ""));
     await axios
       .get(`https://first-nest.vercel.app/${details.id}`, {
-        headers: { Authorization : `Bearer ${token.replaceAll('"',"")}` },
+        headers: { Authorization: `Bearer ${token.replaceAll('"', "")}` },
       })
       .then(function (res) {
         console.log(res.data);
@@ -26,6 +26,7 @@ export default function TabOneScreen({
         console.log(error);
       });
   }
+
   useEffect(() => {
     const fetchData = async () => {
       const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
@@ -45,12 +46,6 @@ export default function TabOneScreen({
         <Text style={styles.title}>Click here</Text>
       </Pressable>
 
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
     </View>
   );
 }
