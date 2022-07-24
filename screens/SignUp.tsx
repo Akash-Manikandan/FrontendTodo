@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -19,6 +19,7 @@ export default function SignUp() {
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
@@ -66,109 +67,131 @@ export default function SignUp() {
         console.log(error + "1");
       });
   }
-  return (
-    <View>
-      <Text
-        style={{
-          color: Colors[colorScheme].text,
-          fontWeight: "bold",
-          fontSize: 25,
-        }}
-      >
-        Name :
-      </Text>
-      <TextInput
-        style={{
-          padding: 18,
-          borderWidth: 2,
-          borderRadius: 20,
-          borderColor: "#e33062",
-          color: Colors[colorScheme].text,
-          fontSize: 18,
-          width: "100%",
-          marginVertical: 25,
-        }}
-        onChangeText={setName}
-        placeholder="name"
-        value={name}
-      />
-      <Text
-        style={{
-          color: Colors[colorScheme].text,
-          fontWeight: "bold",
-          fontSize: 25,
-        }}
-      >
-        E-mail :
-      </Text>
-      <TextInput
-        style={{
-          padding: 18,
-          borderWidth: 2,
-          borderRadius: 20,
-          borderColor: "#e33062",
-          color: Colors[colorScheme].text,
-          fontSize: 18,
-          width: "100%",
-          marginVertical: 25,
-        }}
-        onChangeText={setText}
-        placeholder="email"
-        value={text}
-      />
-      <Text
-        style={{
-          color: Colors[colorScheme].text,
-          fontWeight: "bold",
-          fontSize: 25,
-        }}
-      >
-        Password :
-      </Text>
-      <TextInput
-        style={{
-          padding: 18,
-          borderWidth: 2,
-          borderRadius: 20,
-          borderColor: "#e33062",
-          color: Colors[colorScheme].text,
-          fontSize: 18,
-          width: "100%",
-          marginVertical: 25,
-        }}
-        secureTextEntry
-        onChangeText={setPassword}
-        placeholder="password"
-        value={password}
-      />
+  useEffect(() => {
+    const fetchData = async () => {
+      const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
+      const jsonValue1: any = await AsyncStorage.getItem("@kayee_details");
+      if (jsonValue && jsonValue1) {
+        navigation.replace("Todo");
+      }
+    };
+    fetchData();
+    setIsCheck(true);
+    return () => {
+      setText("");
+      setPassword("");
+      setIsLoading(true);
+      setIsCheck(true);
+    };
+  }, []);
+  if (!isCheck) {
+    return null;
+  } else {
+    return (
       <View>
-        {isLoading && <ActivityIndicator size="large" color="#e33062" />}
-
-        <Pressable
-          onPress={auth}
-          disabled={isLoading}
+        <Text
           style={{
-            backgroundColor: "#e33062",
-            height: 50,
-            borderRadius: 50,
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 30,
+            color: Colors[colorScheme].text,
+            fontWeight: "bold",
+            fontSize: 25,
           }}
         >
-          <Text
+          Name :
+        </Text>
+        <TextInput
+          style={{
+            padding: 18,
+            borderWidth: 2,
+            borderRadius: 20,
+            borderColor: "#e33062",
+            color: Colors[colorScheme].text,
+            fontSize: 18,
+            width: "100%",
+            marginVertical: 25,
+          }}
+          onChangeText={setName}
+          placeholder="name"
+          value={name}
+        />
+        <Text
+          style={{
+            color: Colors[colorScheme].text,
+            fontWeight: "bold",
+            fontSize: 25,
+          }}
+        >
+          E-mail :
+        </Text>
+        <TextInput
+          style={{
+            padding: 18,
+            borderWidth: 2,
+            borderRadius: 20,
+            borderColor: "#e33062",
+            color: Colors[colorScheme].text,
+            fontSize: 18,
+            width: "100%",
+            marginVertical: 25,
+          }}
+          onChangeText={setText}
+          placeholder="email"
+          value={text}
+        />
+        <Text
+          style={{
+            color: Colors[colorScheme].text,
+            fontWeight: "bold",
+            fontSize: 25,
+          }}
+        >
+          Password :
+        </Text>
+        <TextInput
+          style={{
+            padding: 18,
+            borderWidth: 2,
+            borderRadius: 20,
+            borderColor: "#e33062",
+            color: Colors[colorScheme].text,
+            fontSize: 18,
+            width: "100%",
+            marginVertical: 25,
+          }}
+          secureTextEntry
+          onChangeText={setPassword}
+          placeholder="password"
+          value={password}
+        />
+        <View>
+          {isLoading && <ActivityIndicator size="large" color="#e33062" />}
+
+          <Pressable
+            onPress={auth}
+            disabled={isLoading}
             style={{
-              color: "white",
-              fontSize: 18,
-              fontWeight: "bold",
+              backgroundColor: "#e33062",
+              height: 50,
+              borderRadius: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 30,
             }}
           >
-            Go!
-          </Text>
-        </Pressable>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              Go!
+            </Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
+
 }
 
 const styles = StyleSheet.create({

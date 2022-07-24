@@ -59,11 +59,7 @@ function RootNavigator() {
         component={FrontScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Todo"
-        component={BottomTabNavigator}
-     
-      />
+      <Stack.Screen name="Todo" component={BottomTabNavigator} />
 
       <Stack.Screen
         name="NotFound"

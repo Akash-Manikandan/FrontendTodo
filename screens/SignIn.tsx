@@ -1,7 +1,7 @@
 //@ts-nocheck
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TextInput,
   Pressable,
@@ -21,7 +21,7 @@ export default function SignIn() {
   const [text, setText] = useState("ke@gmail.com");
   const [password, setPassword] = useState("karthi");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isCheck, setIsCheck] = useState(false);
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const headers = {
@@ -71,84 +71,104 @@ export default function SignIn() {
         return;
       });
   }
-
-  return (
-    <View>
-      <Text
-        style={{
-          color: Colors[colorScheme].text,
-          fontWeight: "bold",
-          fontSize: 25,
-        }}
-      >
-        E-mail
-      </Text>
-      <TextInput
-        onChangeText={setText}
-        placeholder="email"
-        value={text}
-        style={{
-          padding: 18,
-          borderWidth: 2,
-          borderRadius: 20,
-          borderColor: "#e33062",
-          color: Colors[colorScheme].text,
-          fontSize: 18,
-          width: "100%",
-          marginVertical: 25,
-        }}
-      />
-      <Text
-        style={{
-          color: Colors[colorScheme].text,
-          fontWeight: "bold",
-          fontSize: 25,
-        }}
-      >
-        Password
-      </Text>
-      <TextInput
-        onChangeText={setPassword}
-        placeholder="password"
-        value={password}
-        secureTextEntry
-        style={{
-          padding: 18,
-          borderWidth: 2,
-          borderRadius: 20,
-          borderColor: "#e33062",
-          color: Colors[colorScheme].text,
-          fontSize: 18,
-          width: "100%",
-          marginVertical: 25,
-        }}
-      />
-
+  useEffect(() => {
+    const fetchData = async () => {
+      const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
+      const jsonValue1: any = await AsyncStorage.getItem("@kayee_details");
+      if (jsonValue && jsonValue1) {
+        navigation.replace("Todo");
+      }
+    };
+    fetchData();
+    setIsCheck(true);
+    return () => {
+      setText(null);
+      setPassword(null);
+      setIsLoading(null);
+      setIsCheck(null);
+    };
+  }, []);
+  if (!isCheck) {
+    return <ActivityIndicator size="large" color="#e33062" />;
+  } else {
+    return (
       <View>
-        {isLoading && <ActivityIndicator size="large" color="#e33062" />}
-        <Pressable
-          onPress={auth}
-          disabled={isLoading}
+        <Text
           style={{
-            backgroundColor: "#e33062",
-            height: 50,
-            borderRadius: 50,
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 30,
+            color: Colors[colorScheme].text,
+            fontWeight: "bold",
+            fontSize: 25,
           }}
         >
-          <Text
+          E-mail
+        </Text>
+        <TextInput
+          onChangeText={setText}
+          placeholder="email"
+          value={text}
+          style={{
+            padding: 18,
+            borderWidth: 2,
+            borderRadius: 20,
+            borderColor: "#e33062",
+            color: Colors[colorScheme].text,
+            fontSize: 18,
+            width: "100%",
+            marginVertical: 25,
+          }}
+        />
+        <Text
+          style={{
+            color: Colors[colorScheme].text,
+            fontWeight: "bold",
+            fontSize: 25,
+          }}
+        >
+          Password
+        </Text>
+        <TextInput
+          onChangeText={setPassword}
+          placeholder="password"
+          value={password}
+          secureTextEntry
+          style={{
+            padding: 18,
+            borderWidth: 2,
+            borderRadius: 20,
+            borderColor: "#e33062",
+            color: Colors[colorScheme].text,
+            fontSize: 18,
+            width: "100%",
+            marginVertical: 25,
+          }}
+        />
+
+        <View>
+          {isLoading && <ActivityIndicator size="large" color="#e33062" />}
+          <Pressable
+            onPress={auth}
+            disabled={isLoading}
             style={{
-              color: "white",
-              fontSize: 18,
-              fontWeight: "bold",
+              backgroundColor: "#e33062",
+              height: 50,
+              borderRadius: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 30,
             }}
           >
-            Login
-          </Text>
-        </Pressable>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              Login
+            </Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
