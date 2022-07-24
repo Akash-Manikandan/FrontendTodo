@@ -24,10 +24,7 @@ export default function TabOneScreen({
         })
         .then(function (res) {
           console.log(res.data);
-          <FlatList
-            data={res.data}
-            renderItem={({ item }) => <TodoItems todo={item} />}
-          />;
+    
         })
         .catch(function (error) {
           console.log(error);
