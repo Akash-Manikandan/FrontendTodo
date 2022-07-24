@@ -14,7 +14,6 @@ import useColorScheme from "../hooks/useColorScheme";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 export default function SignIn() {
   const toggleLoading = () => {
     setIsLoading(!isLoading);
@@ -67,6 +66,9 @@ export default function SignIn() {
       })
       .catch(function (error) {
         console.log(error + "1");
+        alert("Email or password is incorrect");
+        setIsLoading(false);
+        return;
       });
   }
 
@@ -123,9 +125,10 @@ export default function SignIn() {
       />
 
       <View>
-      {isLoading && <ActivityIndicator size="large" color="#e33062" />}
+        {isLoading && <ActivityIndicator size="large" color="#e33062" />}
         <Pressable
           onPress={auth}
+          disabled={isLoading}
           style={{
             backgroundColor: "#e33062",
             height: 50,
@@ -135,7 +138,6 @@ export default function SignIn() {
             marginTop: 30,
           }}
         >
-          
           <Text
             style={{
               color: "white",

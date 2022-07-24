@@ -146,6 +146,7 @@ export default function SignUp() {
 
         <Pressable
           onPress={auth}
+          disabled={isLoading}
           style={{
             backgroundColor: "#e33062",
             height: 50,

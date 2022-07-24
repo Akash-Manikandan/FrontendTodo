@@ -3,41 +3,36 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, StyleSheet } from "react-native";
 
-import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
+import TodoItems from "../components/TodoItems";
 import { RootTabScreenProps } from "../types";
 
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
-  const [details, setDetails] = useState("");
-  const [token, setToken] = useState("");
-
-  
-
   useEffect(() => {
-    async function fetchTodo(a: any, b: any) {
-      console.log(b.id);
-      console.log(a.replaceAll('"', ""));
+    const fetchData = async () => {
+      const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
+      const jsonValue1: any = await AsyncStorage.getItem("@kayee_details");
+      var det = JSON.parse(jsonValue1);
+      var tok = jsonValue;
+      console.log(det.id);
+      console.log(tok.replaceAll('"', ""));
       await axios
-        .get(`https://first-nest.vercel.app/${b.id}`, {
-          headers: { Authorization: `Bearer ${a.replaceAll('"', "")}` },
+        .get(`https://first-nest.vercel.app/${det.id}`, {
+          headers: { Authorization: `Bearer ${tok.replaceAll('"', "")}` },
         })
         .then(function (res) {
           console.log(res.data);
+          <FlatList
+            data={res.data}
+            renderItem={({ item }) => <TodoItems todo={item} />}
+          />;
         })
         .catch(function (error) {
           console.log(error);
         });
-    }
-    const fetchData = async () => {
-      const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
-      const jsonValue1: any = await AsyncStorage.getItem("@kayee_details");
-      setDetails(JSON.parse(jsonValue1));
-      setToken(jsonValue);
-      fetchTodo(jsonValue, jsonValue1);
     };
-
     fetchData();
     return () => {
       null;
@@ -46,7 +41,7 @@ export default function TabOneScreen({
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={fetchTodo}>
+      <Pressable>
         <Text style={styles.title}>Click here</Text>
       </Pressable>
     </View>

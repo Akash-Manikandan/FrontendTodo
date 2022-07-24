@@ -62,7 +62,7 @@ function RootNavigator() {
       <Stack.Screen
         name="Todo"
         component={BottomTabNavigator}
-        options={{ title: "SignIn" }}
+     
       />
 
       <Stack.Screen
@@ -90,7 +90,6 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
-      
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
@@ -99,7 +98,7 @@ function BottomTabNavigator() {
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
