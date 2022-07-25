@@ -6,7 +6,6 @@ import {
   TextInput,
   Pressable,
   ActivityIndicator,
-  TouchableOpacity,
 } from "react-native";
 import { View, Text } from "react-native";
 import Colors from "../constants/Colors";
@@ -66,7 +65,11 @@ export default function SignIn() {
       })
       .catch(function (error) {
         console.log(error + "1");
-        alert("Email or password is incorrect");
+        if (!text || !password) {
+          alert("Email or Password cannot be empty");
+        } else {
+          alert("Email or Password is incorrect");
+        }
         setIsLoading(false);
         return;
       });
@@ -82,8 +85,8 @@ export default function SignIn() {
     fetchData();
     setIsCheck(true);
     return () => {
-      setText(null);
-      setPassword(null);
+      setText("");
+      setPassword("");
       setIsLoading(null);
       setIsCheck(null);
     };

@@ -13,14 +13,15 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
-
+import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import FrontScreen from "../screens/FrontScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SignIn from "../screens/SignIn";
-import SignUp from "../screens/SignUp";
+import SignOut from "../screens/SignOut";
+import AddItems from "../components/AddItems/index";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
@@ -59,7 +60,13 @@ function RootNavigator() {
         component={FrontScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Todo" component={BottomTabNavigator} />
+      <Stack.Screen
+        name="Todo"
+        options={{
+          headerRight: () => <SignOut />,
+        }}
+        component={BottomTabNavigator}
+      />
 
       <Stack.Screen
         name="NotFound"

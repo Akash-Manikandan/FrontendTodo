@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { View, Text, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import SignIn from "./SignIn";
@@ -10,7 +11,7 @@ export default function FrontScreen() {
   const [value, setValue] = useState(true);
   const [isCheck, setIsCheck] = useState(false);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async () => {  
       const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
       const jsonValue1: any = await AsyncStorage.getItem("@kayee_details");
       if (jsonValue && jsonValue1) {

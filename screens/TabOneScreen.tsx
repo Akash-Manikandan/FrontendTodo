@@ -1,12 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 
-import { Text, View } from "../components/Themed";
 import TodoItems from "../components/TodoItems";
 import { RootTabScreenProps } from "../types";
-import SignOut from "./SignOut";
+
 
 export default function TabOneScreen({
   navigation,
@@ -21,7 +20,7 @@ export default function TabOneScreen({
 
       await axios
         .get(`https://first-nest.vercel.app/${det.id}`, {
-          headers: { Authorization: `Bearer ${tok.replaceAll('"', "")}` },
+          headers: { Authorization: `Bearer ${tok.replace(/"/g, "")}` },
         })
         .then(function (res) {
           setTodo(res.data);
@@ -40,8 +39,8 @@ export default function TabOneScreen({
     <SafeAreaView style={styles.container}>
       <View>
         <TodoItems todo={todo} />
-        <SignOut />
       </View>
+      
     </SafeAreaView>
   );
 }
@@ -49,7 +48,6 @@ export default function TabOneScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+ 
   },
 });
