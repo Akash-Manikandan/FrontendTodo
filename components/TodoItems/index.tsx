@@ -27,9 +27,9 @@ const TodoItems = (props: any) => {
   useEffect(() => {
     setData(props.todo);
     console.log(props.todo);
-  },[props.todo]);
+  }, [props.todo]);
   const onPressItem = (item: any) => {
-    console.log(data)
+    console.log(data);
     setIsModalVisible(true);
     setInputText(item.text);
     setEditItem(item.id);
@@ -47,7 +47,21 @@ const TodoItems = (props: any) => {
       </Pressable>
     );
   };
-  const onPressSaveEdit = () => {};
+  const handleEditItem = (editItem: any) => {
+    const newData = data.map((item: any) => {
+      if (item.id == editItem) {
+        item.text = inputText;
+        return item;
+      }
+      return item;
+    });
+    setData(newData);
+    setIsRender(!isRender);
+  };
+  const onPressSaveEdit = () => {
+    handleEditItem(editItem);
+    setIsModalVisible(false);
+  };
   return (
     <View style={styles.container}>
       <FlatList
@@ -59,7 +73,7 @@ const TodoItems = (props: any) => {
       <Modal
         animationType="fade"
         visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
+        onRequestClose={() => setIsModalVisible()}
       >
         <View style={styles.modal}>
           <Text>Change Text: </Text>
