@@ -73,7 +73,7 @@ const TodoItems = (props: any) => {
       <Modal
         animationType="fade"
         visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible()}
+        onRequestClose={() => setIsModalVisible(false)}
       >
         <View style={styles.modal}>
           <Text>Change Text: </Text>
