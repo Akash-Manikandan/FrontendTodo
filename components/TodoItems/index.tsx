@@ -19,12 +19,17 @@ import ModalScreen from "../../screens/ModalScreen";
 const TodoItems = (props: any) => {
   const colorScheme = useColorScheme();
   const [data, setData] = useState(props.todo);
+
   const [isRender, setIsRender] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [inputText, setInputText] = useState("");
   const [editItem, setEditItem] = useState();
-
+  useEffect(() => {
+    setData(props.todo);
+    console.log(props.todo);
+  },[props.todo]);
   const onPressItem = (item: any) => {
+    console.log(data)
     setIsModalVisible(true);
     setInputText(item.text);
     setEditItem(item.id);
