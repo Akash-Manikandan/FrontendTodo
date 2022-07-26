@@ -4,7 +4,6 @@ import {
   FlatList,
   StyleSheet,
   Pressable,
-  Vibration,
   TouchableOpacity,
   Modal,
   TextInput,
@@ -14,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import AddItems from "../AddItems";
-import ModalScreen from "../../screens/ModalScreen";
+
 
 const TodoItems = (props: any) => {
   const colorScheme = useColorScheme();
@@ -26,12 +25,11 @@ const TodoItems = (props: any) => {
   const [editItem, setEditItem] = useState();
   useEffect(() => {
     setData(props.todo);
-    console.log(props.todo);
   }, [props.todo]);
+
   const onPressItem = (item: any) => {
-    console.log(data);
     setIsModalVisible(true);
-    setInputText(item.text);
+    setInputText(item.content);
     setEditItem(item.id);
   };
   const renderItem = ({ item }: any) => {
@@ -50,7 +48,7 @@ const TodoItems = (props: any) => {
   const handleEditItem = (editItem: any) => {
     const newData = data.map((item: any) => {
       if (item.id == editItem) {
-        item.text = inputText;
+        item.content = inputText;
         return item;
       }
       return item;
