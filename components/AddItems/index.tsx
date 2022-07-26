@@ -27,6 +27,7 @@ export default AddItems;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    alignItems:"flex-end"
+    alignItems: "flex-end",
+    
   },
 });
