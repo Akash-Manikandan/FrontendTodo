@@ -13,7 +13,8 @@ import React, { useEffect, useState } from "react";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import AddItems from "../AddItems";
-
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TodoItems = (props: any) => {
   const colorScheme = useColorScheme();
@@ -45,15 +46,33 @@ const TodoItems = (props: any) => {
       </Pressable>
     );
   };
-  const handleEditItem = (editItem: any) => {
+  const handleEditItem = async (editItem: any) => {
+    let cpy:any;
     const newData = data.map((item: any) => {
       if (item.id == editItem) {
         item.content = inputText;
+        cpy = item;
         return item;
       }
       return item;
     });
     setData(newData);
+    const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
+    let tok = jsonValue;
+    await axios.patch(
+      "https://first-nest.vercel.app/updateTodo",
+      {
+        id: cpy.id,
+        content: cpy.content,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${tok.replace(/"/g, "")}`,
+        },
+      }
+    );
     setIsRender(!isRender);
   };
   const onPressSaveEdit = () => {
