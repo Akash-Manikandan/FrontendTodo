@@ -17,8 +17,8 @@ export default function SignIn() {
   const toggleLoading = () => {
     setIsLoading(!isLoading);
   };
-  const [text, setText] = useState("ke@gmail.com");
-  const [password, setPassword] = useState("karthi");
+  const [text, setText] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
   const navigation = useNavigation();

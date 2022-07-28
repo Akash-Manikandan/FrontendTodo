@@ -9,7 +9,6 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import AddItems from "../AddItems";
@@ -47,7 +46,7 @@ const TodoItems = (props: any) => {
     );
   };
   const handleEditItem = async (editItem: any) => {
-    let cpy:any;
+    let cpy: any;
     const newData = data.map((item: any) => {
       if (item.id == editItem) {
         item.content = inputText;
@@ -87,21 +86,36 @@ const TodoItems = (props: any) => {
         keyExtractor={(item) => item.id}
         extraData={isRender}
       />
+
       <Modal
-        animationType="fade"
+        animationType="slide"
         visible={isModalVisible}
         onRequestClose={() => setIsModalVisible(false)}
       >
-        <View style={styles.modal}>
-          <Text>Change Text: </Text>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ margin: 20, fontWeight: "bold", fontSize: 25 }}>
+            Edit
+          </Text>
           <TextInput
             style={styles.textInput}
             onChangeText={(text) => setInputText(text)}
             defaultValue={inputText}
             editable={true}
+            multiline={true}
           />
-          <TouchableOpacity onPress={() => onPressSaveEdit()}>
-            <Text>Save</Text>
+          <TouchableOpacity
+            style={styles.touchableSave}
+            onPress={() => onPressSaveEdit()}
+          >
+            <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
+              Update
+            </Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -133,10 +147,12 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: "90%",
-    height: 70,
-    borderColor: "grey",
-    borderWidth: 1,
+    height: 80,
+    borderColor: "#e33062",
+    borderWidth: 5,
     fontSize: 25,
+    borderRadius: 30,
+    padding: 20,
   },
   modal: {
     flex: 1,
@@ -144,10 +160,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   touchableSave: {
-    backgroundColor: "orange",
-    paddingHorizontal: 100,
+    paddingHorizontal: 10,
+    borderRadius: 30,
+    backgroundColor: "#e33062",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 25,
   },
 });
 export default TodoItems;

@@ -2,10 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView, View } from "react-native";
-
 import TodoItems from "../components/TodoItems";
 import { RootTabScreenProps } from "../types";
-
 
 export default function TabOneScreen({
   navigation,
@@ -40,13 +38,10 @@ export default function TabOneScreen({
       <View>
         <TodoItems todo={todo} />
       </View>
-      
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
- 
-  },
+  container: {},
 });
