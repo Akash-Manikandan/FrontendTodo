@@ -11,7 +11,8 @@ import {
 import React, { useEffect, useState } from "react";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
-import AddItems from "../AddItems";
+import { Ionicons } from "@expo/vector-icons";
+
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -43,6 +44,94 @@ const TodoItems = (props: any) => {
           </Text>
         </View>
       </Pressable>
+    );
+  };
+  const AddItems = () => {
+    const colorScheme = useColorScheme();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [inputText, setInputText] = useState("");
+
+    async function onPressSave() {
+      setIsModalVisible(false);
+      const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
+      const jsonValue1: any = await AsyncStorage.getItem("@kayee_details");
+      var det = JSON.parse(jsonValue1);
+
+      let tok = jsonValue;
+
+      const dataReq = await axios.post(
+        "https://first-nest.vercel.app/addTodo",
+        {
+          userId: det.id,
+          content: inputText,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${tok.replace(/"/g, "")}`,
+          },
+        }
+      );
+      const valId = dataReq.data.id;
+      const valContent = dataReq.data.content;
+      setData([...data,{id:valId,content:valContent}]);
+    }
+
+    const addTodo = () => {
+      setIsModalVisible(true);
+    };
+    return (
+      <View style={styles.container}>
+        <Pressable onPress={addTodo}>
+          <Ionicons
+            name="md-add-circle"
+            size={58}
+            color="black"
+            style={{ color: Colors[colorScheme].text }}
+          />
+        </Pressable>
+        <Modal
+          animationType="slide"
+          visible={isModalVisible}
+          onRequestClose={() => setIsModalVisible(false)}
+        >
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ margin: 20, fontWeight: "bold", fontSize: 25 }}>
+              Add Todo
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={(text) => setInputText(text)}
+              defaultValue={inputText}
+              editable={true}
+              multiline={true}
+            />
+            <TouchableOpacity
+              style={styles.touchableSave}
+              onPress={() => onPressSave()}
+            >
+              <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
+                Save
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.touchableSave}
+              onPress={() => setIsModalVisible(false)}
+            >
+              <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
+                Exit
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      </View>
     );
   };
   const handleEditItem = async (editItem: any) => {

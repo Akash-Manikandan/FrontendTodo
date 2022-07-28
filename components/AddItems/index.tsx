@@ -85,6 +85,14 @@ const AddItems = () => {
               Save
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.touchableSave}
+            onPress={() => setIsModalVisible(false)}
+          >
+            <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
+              Exit
+            </Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>

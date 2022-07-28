@@ -66,6 +66,11 @@ export default function SignUp() {
       })
       .catch(function (error) {
         console.log(error + "1");
+        if (!text || !password) {
+          alert("All Fields are required!");
+        }
+        setIsLoading(false);
+        return;
       });
   }
   useEffect(() => {
