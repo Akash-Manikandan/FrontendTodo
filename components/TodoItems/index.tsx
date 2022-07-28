@@ -4,7 +4,6 @@ import {
   FlatList,
   StyleSheet,
   Pressable,
-  TouchableOpacity,
   Modal,
   TextInput,
 } from "react-native";
@@ -12,14 +11,13 @@ import React, { useEffect, useState } from "react";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
-
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const TodoItems = (props: any) => {
   const colorScheme = useColorScheme();
   const [data, setData] = useState(props.todo);
-
   const [isRender, setIsRender] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [inputText, setInputText] = useState("");
@@ -33,17 +31,38 @@ const TodoItems = (props: any) => {
     setInputText(item.content);
     setEditItem(item.id);
   };
+  const deleteItem = async (item: any) => {
+    const jsonValue: any = await AsyncStorage.getItem("@kayee_login");
+    let tok = jsonValue;
+    const filteredData = data.filter((v: any) => v.id !== item.id);
+    setData(filteredData);
+    await axios.delete("https://first-nest.vercel.app/delete", {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${tok.replace(/"/g, "")}`,
+      },
+      data: {
+        id: item.id,
+      },
+    });
+  };
   const renderItem = ({ item }: any) => {
-    // const ONE_SECOND_IN_MS = 1000;
-    // const PATTERN = [1 * ONE_SECOND_IN_MS];
     return (
-      <Pressable onPress={() => onPressItem(item)}>
-        <View style={styles.item}>
-          <Text style={{ color: Colors[colorScheme].text }}>
+      <View style={styles.item}>
+        <Pressable onPress={() => onPressItem(item)}>
+          <Text style={{ color: Colors[colorScheme].text, padding: 4 }}>
             {item.content}
           </Text>
-        </View>
-      </Pressable>
+        </Pressable>
+        <Pressable onPress={() => deleteItem(item)}>
+          <MaterialIcons
+            name="delete"
+            size={24}
+            color={Colors[colorScheme].text}
+          />
+        </Pressable>
+      </View>
     );
   };
   const AddItems = () => {
@@ -75,7 +94,7 @@ const TodoItems = (props: any) => {
       );
       const valId = dataReq.data.id;
       const valContent = dataReq.data.content;
-      setData([...data,{id:valId,content:valContent}]);
+      setData([...data, { id: valId, content: valContent }]);
     }
 
     const addTodo = () => {
@@ -113,27 +132,31 @@ const TodoItems = (props: any) => {
               editable={true}
               multiline={true}
             />
-            <TouchableOpacity
-              style={styles.touchableSave}
-              onPress={() => onPressSave()}
-            >
-              <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
-                Save
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.touchableSave}
-              onPress={() => setIsModalVisible(false)}
-            >
-              <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
-                Exit
-              </Text>
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row" }}>
+              <Pressable
+                style={styles.touchableSave}
+                onPress={() => onPressSave()}
+              >
+                <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
+                  Save
+                </Text>
+              </Pressable>
+              <View style={{ width: 30 }}></View>
+              <Pressable
+                style={styles.touchableSave}
+                onPress={() => setIsModalVisible(false)}
+              >
+                <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
+                  Exit
+                </Text>
+              </Pressable>
+            </View>
           </View>
         </Modal>
       </View>
     );
   };
+
   const handleEditItem = async (editItem: any) => {
     let cpy: any;
     const newData = data.map((item: any) => {
@@ -169,13 +192,28 @@ const TodoItems = (props: any) => {
   };
   return (
     <View style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={isRender}
-      />
-
+      {data.length == 0 ? (
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ color: Colors[colorScheme].text, fontSize: 40 }}>
+            No Todos
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          extraData={isRender}
+        />
+      )}
       <Modal
         animationType="slide"
         visible={isModalVisible}
@@ -198,14 +236,25 @@ const TodoItems = (props: any) => {
             editable={true}
             multiline={true}
           />
-          <TouchableOpacity
-            style={styles.touchableSave}
-            onPress={() => onPressSaveEdit()}
-          >
-            <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
-              Update
-            </Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row" }}>
+            <Pressable
+              style={styles.touchableSave}
+              onPress={() => onPressSaveEdit()}
+            >
+              <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
+                Update
+              </Text>
+            </Pressable>
+            <View style={{ width: 30 }}></View>
+            <Pressable
+              style={styles.touchableSave}
+              onPress={() => setIsModalVisible(false)}
+            >
+              <Text style={{ color: "white", fontSize: 20, padding: 12 }}>
+                Exit
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </Modal>
       <View
@@ -231,8 +280,12 @@ const styles = StyleSheet.create({
     margin: 10,
     borderColor: "#e33062",
     padding: 15,
-
+    flexDirection: "row",
     borderRadius: 20,
+    width: "98%",
+    justifyContent: "space-between",
+    textAlign: "center",
+    alignSelf: "center",
   },
   textInput: {
     width: "90%",
@@ -243,13 +296,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 20,
   },
-  modal: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   touchableSave: {
-    paddingHorizontal: 10,
+    width: "30%",
+    height: "65%",
+
     borderRadius: 30,
     backgroundColor: "#e33062",
     alignItems: "center",
